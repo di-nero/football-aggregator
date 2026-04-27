@@ -1,0 +1,29 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: footballdb
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: footballdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    command: postgres -c listen_addresses='*'
+  redis:
+    image: redis:7-alpine
+    container_name: football-redis
+    restart: always
+    ports:
+      - "6379:6379"
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: football-rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+volumes:
+  postgres-data:
